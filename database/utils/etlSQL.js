@@ -1,8 +1,9 @@
 const fs = require('fs');
 const path = require('path');
-const fastcsv = require('fast-csv');
+const csvBatch = require('csv-batch');
 const questionsETL = require('./questionsETL');
 const answersETL = require('./answersETL');
+const answersPhotosETL = require('./answerPhotosETL');
 
 const questions = path.resolve(__dirname, '../../csv/questions.csv');
 const answers = path.resolve(__dirname, '../../csv/answers.csv');
@@ -10,29 +11,24 @@ const answersPhotos = path.resolve(__dirname, '../../csv/answers_photos.csv');
 
 const questionsStream = fs.createReadStream(questions);
 const answersStream = fs.createReadStream(answers);
-const answerPhotosStream = fs.createReadStream(answersPhotos);
+const answersPhotosStream = fs.createReadStream(answersPhotos);
 
-const questionsCSVData = [];
-const answersCSVData = [];
-const answersPhotosCSVData = [];
+csvBatch(questionsStream, {
+  batch: true,
+  batchSize: 100000,
+  batchExecution: (batch) => {
+    questionsETL(batch);
+  },
+}).then((results) => {
+  console.log(`Processed ${results.totalRecords}`);
+});
 
-const questionsCSVStream = fastcsv.parse()
-  .on('data', (data) => {
-    questionsCSVData.push(data);
-  })
-  .on('end', () => {
-    questionsCSVData.shift();
-    questionsETL(questionsCSVData);
-  });
-
-const answersCSVStream = fastcsv.parse()
-  .on('data', (data) => {
-    answersCSVData.push(data);
-  })
-  .on('end', () => {
-    answersCSVData.shift();
-    answersETL(answersCSVData);
-  });
-
-questionsStream.pipe(questionsCSVStream);
-answersStream.pipe(answersCSVStream);
+// csvBatch(answersStream, {
+//   batch: true,
+//   batchSize: 10000,
+//   batchExecution: (batch) => {
+//     answersETL(batch);
+//   },
+// }).then((results) => {
+//   console.log(`Processed ${results.totalRecords}`);
+// });

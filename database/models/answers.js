@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+const AnswerPhoto = require('./answerPhotos');
 const db = require('../config/db.config');
 
 const Answer = db.define('answer', {
@@ -6,7 +7,7 @@ const Answer = db.define('answer', {
     type: Sequelize.INTEGER,
     primaryKey: true,
   },
-  questionId: {
+  question_id: {
     type: Sequelize.INTEGER,
     references: {
       model: 'questions',
@@ -20,5 +21,7 @@ const Answer = db.define('answer', {
   reported: Sequelize.INTEGER,
   helpful: Sequelize.INTEGER,
 });
+
+Answer.hasMany(AnswerPhoto, { foreignKey: 'answer_id' });
 
 module.exports = Answer;

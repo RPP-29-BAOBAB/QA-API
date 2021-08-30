@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/RPP-29-BAOBAB/QA-API#readme",
   "dependencies": {
+    "csv-batch": "^2.0.4",
     "express": "^4.17.1",
     "fast-csv": "^4.3.6",
     "mysql2": "^2.3.0",
