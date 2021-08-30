@@ -1,13 +1,13 @@
 const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize('sdcqa', 'root', '', {
+const db = new Sequelize('sdcqa', 'root', '', {
   dialect: 'mysql',
   hostname: 'localhost'
 });
 
 (async () => {
   try {
-    await sequelize.authenticate();
+    await db.authenticate();
     console.log('connected to mysql db')
   } catch (err) {
     console.log(err)
@@ -15,4 +15,4 @@ const sequelize = new Sequelize('sdcqa', 'root', '', {
 })();
 
 
-module.exports = sequelize;
+module.exports = db;

@@ -8,7 +8,7 @@ const Question = db.define('question', {
   },
   product_id: Sequelize.INTEGER,
   body: Sequelize.STRING,
-  date_written: Sequelize.DATE,
+  date_written: Sequelize.STRING,
   asker_name: Sequelize.STRING,
   asker_email: Sequelize.STRING,
   reported: Sequelize.INTEGER,
