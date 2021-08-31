@@ -23,12 +23,22 @@ csvBatch(questionsStream, {
   console.log(`Processed ${results.totalRecords}`);
 });
 
-// csvBatch(answersStream, {
-//   batch: true,
-//   batchSize: 10000,
-//   batchExecution: (batch) => {
-//     answersETL(batch);
-//   },
-// }).then((results) => {
-//   console.log(`Processed ${results.totalRecords}`);
-// });
+csvBatch(answersStream, {
+  batch: true,
+  batchSize: 10000,
+  batchExecution: (batch) => {
+    answersETL(batch);
+  },
+}).then((results) => {
+  console.log(`Processed ${results.totalRecords}`);
+});
+
+csvBatch(answersPhotosStream, {
+  batch: true,
+  batchSize: 100000,
+  batchExecution: (batch) => {
+    answersPhotosETL(batch);
+  },
+}).then((results) => {
+  console.log(`Processed ${results.totalRecords}`);
+});

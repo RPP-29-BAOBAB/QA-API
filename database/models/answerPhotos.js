@@ -13,7 +13,7 @@ const answerPhoto = db.define('answers_photos', {
       key: 'id',
     },
   },
-  url: Sequelize.INTEGER,
+  url: Sequelize.STRING,
 });
 
 module.exports = answerPhoto;
