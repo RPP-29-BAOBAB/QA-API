@@ -13,32 +13,37 @@ const questionsStream = fs.createReadStream(questions);
 const answersStream = fs.createReadStream(answers);
 const answersPhotosStream = fs.createReadStream(answersPhotos);
 
-csvBatch(questionsStream, {
-  batch: true,
-  batchSize: 100000,
-  batchExecution: (batch) => {
-    questionsETL(batch);
-  },
-}).then((results) => {
-  console.log(`Processed ${results.totalRecords}`);
-});
+const etlProcess = async () => {
+  try {
+    const questionResults = await csvBatch(questionsStream, {
+      batch: true,
+      batchSize: 100000,
+      batchExecution: (batch) => {
+        questionsETL(batch);
+      },
+    });
+    console.log(`Processed ${questionResults.totalRecords}`);
 
-csvBatch(answersStream, {
-  batch: true,
-  batchSize: 10000,
-  batchExecution: (batch) => {
-    answersETL(batch);
-  },
-}).then((results) => {
-  console.log(`Processed ${results.totalRecords}`);
-});
+    const answerResults = await csvBatch(answersStream, {
+      batch: true,
+      batchSize: 100000,
+      batchExecution: (batch) => {
+        answersETL(batch);
+      },
+    });
+    console.log(`Processed ${answerResults.totalRecords}`);
 
-csvBatch(answersPhotosStream, {
-  batch: true,
-  batchSize: 100000,
-  batchExecution: (batch) => {
-    answersPhotosETL(batch);
-  },
-}).then((results) => {
-  console.log(`Processed ${results.totalRecords}`);
-});
+    const answerPhotosResults = await csvBatch(answersPhotosStream, {
+      batch: true,
+      batchSize: 100000,
+      batchExecution: (batch) => {
+        answersPhotosETL(batch);
+      },
+    });
+    console.log(`Processed ${answerPhotosResults.totalRecords}`);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+etlProcess();
