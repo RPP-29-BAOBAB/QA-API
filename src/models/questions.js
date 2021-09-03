@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const Answer = require('./answers');
-const db = require('../config/db.config');
+const db = require('../config/config');
 
 const Question = db.define('question', {
   id: {

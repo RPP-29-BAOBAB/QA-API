@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const AnswerPhoto = require('./answerPhotos');
-const db = require('../config/db.config');
+const db = require('../config/config');
 
 const Answer = db.define('answer', {
   id: {
