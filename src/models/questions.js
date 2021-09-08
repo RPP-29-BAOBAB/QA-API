@@ -6,6 +6,7 @@ const Question = db.define('question', {
   id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
+    autoIncrement: true,
   },
   product_id: Sequelize.INTEGER,
   body: Sequelize.STRING,
@@ -14,7 +15,7 @@ const Question = db.define('question', {
   asker_email: Sequelize.STRING,
   reported: Sequelize.INTEGER,
   helpful: Sequelize.INTEGER,
-});
+}, { timestamps: false });
 
 Question.hasMany(Answer, { foreignKey: 'question_id' });
 

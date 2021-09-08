@@ -3,7 +3,8 @@ const questions = require('./routes/questions');
 
 const app = express();
 
-app.use('/qa', questions);
+app.use(express.json());
+app.use('/qa/questions', questions);
 
 app.listen(8080, () => {
   console.log('Listening on port 8080');

@@ -14,6 +14,6 @@ const answerPhoto = db.define('answers_photos', {
     },
   },
   url: Sequelize.STRING,
-});
+}, { timestamps: false });
 
 module.exports = answerPhoto;
