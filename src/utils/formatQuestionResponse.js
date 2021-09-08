@@ -1,9 +1,9 @@
-module.exports = (query, productId) => {
+module.exports = (questions, productId) => {
   const response = {};
-  response.results = [];
   response.product_id = productId;
+  response.results = [];
 
-  query.forEach((question) => {
+  questions.forEach((question) => {
     const questionDate = new Date(Number(question.date_written)).toISOString();
     const reported = question.reported === 1;
     const responseObject = {
