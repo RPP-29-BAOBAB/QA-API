@@ -19,8 +19,7 @@ const Question = db.define('question', {
 {
   timestamps: false,
   indexes: [{
-    unique: true,
-    name: 'questions_product_id_idx',
+    name: 'questions_question_id_idx',
     fields: ['product_id'],
   }],
 });

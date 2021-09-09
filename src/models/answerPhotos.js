@@ -19,7 +19,6 @@ const answerPhoto = db.define('answers_photos', {
 {
   timestamps: false,
   indexes: [{
-    unique: true,
     name: 'answers_photos_answer_id_idx',
     fields: ['answer_id'],
   }],

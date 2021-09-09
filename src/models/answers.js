@@ -25,7 +25,6 @@ const Answer = db.define('answer', {
 {
   timestamps: false,
   indexes: [{
-    unique: true,
     name: 'answers_question_id_idx',
     fields: ['question_id'],
   }],
