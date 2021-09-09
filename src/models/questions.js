@@ -15,7 +15,15 @@ const Question = db.define('question', {
   asker_email: Sequelize.STRING,
   reported: Sequelize.INTEGER,
   helpful: Sequelize.INTEGER,
-}, { timestamps: false });
+},
+{
+  timestamps: false,
+  indexes: [{
+    unique: true,
+    name: 'questions_product_id_idx',
+    fields: ['product_id'],
+  }],
+});
 
 Question.hasMany(Answer, { foreignKey: 'question_id' });
 

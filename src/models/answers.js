@@ -21,7 +21,15 @@ const Answer = db.define('answer', {
   answerer_email: Sequelize.STRING,
   reported: Sequelize.INTEGER,
   helpful: Sequelize.INTEGER,
-}, { timestamps: false });
+},
+{
+  timestamps: false,
+  indexes: [{
+    unique: true,
+    name: 'answers_question_id_idx',
+    fields: ['question_id'],
+  }],
+});
 
 Answer.hasMany(AnswerPhoto, { foreignKey: 'answer_id' });
 
