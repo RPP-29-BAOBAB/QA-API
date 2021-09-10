@@ -6,6 +6,7 @@ const Answer = db.define('answer', {
   id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
+    autoIncrement: true,
   },
   question_id: {
     type: Sequelize.INTEGER,
@@ -20,6 +21,13 @@ const Answer = db.define('answer', {
   answerer_email: Sequelize.STRING,
   reported: Sequelize.INTEGER,
   helpful: Sequelize.INTEGER,
+},
+{
+  timestamps: false,
+  indexes: [{
+    name: 'answers_question_id_idx',
+    fields: ['question_id'],
+  }],
 });
 
 Answer.hasMany(AnswerPhoto, { foreignKey: 'answer_id' });
