@@ -11,4 +11,5 @@ router.put('/questions/:question_id/helpful', controller.markQuestionAsHelpul);
 router.put('/questions/:question_id/report', controller.markQuestionAsReported);
 router.put('/answers/:answer_id/helpful', controller.markAnswerAsHelpul);
 router.put('/answers/:answer_id/report', controller.markAnswerAsReported);
+
 module.exports = router;

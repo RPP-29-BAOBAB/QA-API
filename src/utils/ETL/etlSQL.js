@@ -5,9 +5,9 @@ const questionsETL = require('./questionsETL');
 const answersETL = require('./answersETL');
 const answersPhotosETL = require('./answerPhotosETL');
 
-const questions = path.resolve(__dirname, '../../csv/questions.csv');
-const answers = path.resolve(__dirname, '../../csv/answers.csv');
-const answersPhotos = path.resolve(__dirname, '../../csv/answers_photos.csv');
+const questions = path.resolve(__dirname, '../../../csv/questions.csv');
+const answers = path.resolve(__dirname, '../../../csv/answers.csv');
+const answersPhotos = path.resolve(__dirname, '../../../csv/answers_photos.csv');
 
 const questionsStream = fs.createReadStream(questions);
 const answersStream = fs.createReadStream(answers);
