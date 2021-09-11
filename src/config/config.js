@@ -15,7 +15,6 @@ const db = new Sequelize('sdcqa', 'root', '', {
     await db.sync({
       logging: false,
     });
-    console.log('db synced');
   } catch (err) {
     console.log(err);
   }
