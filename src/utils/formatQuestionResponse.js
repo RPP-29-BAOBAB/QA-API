@@ -11,7 +11,7 @@ module.exports = (questions, productId) => {
       question_body: question.body,
       question_date: questionDate,
       asker_name: question.asker_name,
-      question_helpfullness: question.helpful,
+      question_helpfulness: question.helpful,
       reported,
       answers: {},
     };

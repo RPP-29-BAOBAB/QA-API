@@ -1,4 +1,4 @@
-const AnswerPhoto = require('../models/answerPhotos');
+const AnswerPhoto = require('../../models/answerPhotos');
 
 let count = 1;
 
