@@ -3,7 +3,9 @@ require('../models/questions');
 require('../models/answers');
 require('../models/answerPhotos');
 
-const db = new Sequelize('sdcqa', 'root', '', {
+const dbName = process.env.NODE_ENV === 'production' ? 'sdcqa' : 'sdcqa_test';
+
+const db = new Sequelize(dbName, 'root', '', {
   dialect: 'mysql',
   hostname: 'localhost',
 });
@@ -11,7 +13,7 @@ const db = new Sequelize('sdcqa', 'root', '', {
 (async () => {
   try {
     await db.authenticate();
-    console.log('connected to mysql db');
+    console.log(`connected to ${dbName}`);
     await db.sync({
       logging: false,
     });
