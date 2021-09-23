@@ -4,6 +4,7 @@ const csvBatch = require('csv-batch');
 const questionsETL = require('./questionsETL');
 const answersETL = require('./answersETL');
 const answersPhotosETL = require('./answerPhotosETL');
+const db = require('../../config/config');
 
 const questions = path.resolve(__dirname, '../../../csv/questions.csv');
 const answers = path.resolve(__dirname, '../../../csv/answers.csv');
@@ -15,6 +16,11 @@ const answersPhotosStream = fs.createReadStream(answersPhotos);
 
 const etlProcess = async () => {
   try {
+    await db.authenticate();
+    console.log('connected to db');
+    await db.sync({
+      logging: false,
+    });
     const questionResults = await csvBatch(questionsStream, {
       batch: true,
       batchSize: 100000,

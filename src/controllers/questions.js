@@ -21,7 +21,6 @@ const getQuestions = async (req, res) => {
     });
 
     const response = formatQuestions(questions, productId);
-
     res.send(response);
   } catch (err) {
     res.send(err.message);
@@ -30,7 +29,6 @@ const getQuestions = async (req, res) => {
 
 const getAnswers = async (req, res) => {
   try {
-    console.log('??????????????????????');
     const questionId = req.params.question_id;
     const limit = req.query.count ? Number(req.query.count) : 5;
     const offset = req.query.page ? (req.query.page - 1) * limit : 0;
