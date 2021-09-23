@@ -7,8 +7,14 @@ const dbName = process.env.NODE_ENV === 'production' ? 'sdcqa' : 'sdcqa_test';
 
 const db = new Sequelize(dbName, 'root', '', {
   dialect: 'mysql',
-  hostname: 'localhost',
+  host: 'localhost',
 });
+
+// const db = new Sequelize(dbName, process.env.DB_USER, process.env.DB_PASSWORD, {
+//   dialect: 'mysql',
+//   host: process.env.DB_HOSTNAME,
+//   port: 3306,
+// });
 
 (async () => {
   try {

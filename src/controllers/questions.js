@@ -21,7 +21,6 @@ const getQuestions = async (req, res) => {
     });
 
     const response = formatQuestions(questions, productId);
-
     res.send(response);
   } catch (err) {
     res.send(err.message);

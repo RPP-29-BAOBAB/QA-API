@@ -46,4 +46,4 @@ const etlProcess = async () => {
   }
 };
 
-etlProcess();
+module.exports = etlProcess;
