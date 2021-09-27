@@ -1,5 +1,5 @@
 const app = require('../src/app');
-const db = require('../src/config/config');
+const db = require('../src/db/config');
 const Question = require('../src/models/questions')
 const request = require('supertest');
 

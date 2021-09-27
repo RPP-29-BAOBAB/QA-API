@@ -1,8 +1,8 @@
 const Question = require('../models/questions');
 const Answer = require('../models/answers');
 const AnswerPhoto = require('../models/answerPhotos');
-const formatQuestions = require('../utils/formatQuestionResponse');
-const formatAnswers = require('../utils/formatAnswerResponse');
+const formatQuestions = require('../../utils/formatQuestionResponse');
+const formatAnswers = require('../../utils/formatAnswerResponse');
 
 const getQuestions = async (req, res) => {
   try {
