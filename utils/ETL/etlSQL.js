@@ -4,11 +4,11 @@ const csvBatch = require('csv-batch');
 const questionsETL = require('./questionsETL');
 const answersETL = require('./answersETL');
 const answersPhotosETL = require('./answerPhotosETL');
-const db = require('../../config/config');
+const db = require('../../src/db/config');
 
-const questions = path.resolve(__dirname, '../../../csv/questions.csv');
-const answers = path.resolve(__dirname, '../../../csv/answers.csv');
-const answersPhotos = path.resolve(__dirname, '../../../csv/answers_photos.csv');
+const questions = path.resolve(__dirname, '../../csv/questions.csv');
+const answers = path.resolve(__dirname, '../../csv/answers.csv');
+const answersPhotos = path.resolve(__dirname, '../../csv/answers_photos.csv');
 
 const questionsStream = fs.createReadStream(questions);
 const answersStream = fs.createReadStream(answers);
@@ -23,7 +23,7 @@ const etlProcess = async () => {
     });
     const questionResults = await csvBatch(questionsStream, {
       batch: true,
-      batchSize: 100000,
+      batchSize: 1000,
       batchExecution: (batch) => {
         questionsETL(batch);
       },
@@ -32,7 +32,7 @@ const etlProcess = async () => {
 
     const answerResults = await csvBatch(answersStream, {
       batch: true,
-      batchSize: 100000,
+      batchSize: 1000,
       batchExecution: (batch) => {
         answersETL(batch);
       },
@@ -41,7 +41,7 @@ const etlProcess = async () => {
 
     const answerPhotosResults = await csvBatch(answersPhotosStream, {
       batch: true,
-      batchSize: 100000,
+      batchSize: 1000,
       batchExecution: (batch) => {
         answersPhotosETL(batch);
       },

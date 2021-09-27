@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const db = require('../config/config');
+const db = require('../db/config');
 
 const answerPhoto = db.define('answers_photos', {
   id: {
@@ -18,10 +18,6 @@ const answerPhoto = db.define('answers_photos', {
 },
 {
   timestamps: false,
-  indexes: [{
-    name: 'answers_photos_answer_id_idx',
-    fields: ['answer_id'],
-  }],
 });
 
 module.exports = answerPhoto;

@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const Answer = require('./answers');
-const db = require('../config/config');
+const db = require('../db/config');
 
 const Question = db.define('question', {
   id: {
@@ -18,10 +18,6 @@ const Question = db.define('question', {
 },
 {
   timestamps: false,
-  indexes: [{
-    name: 'questions_question_id_idx',
-    fields: ['product_id'],
-  }],
 });
 
 Question.hasMany(Answer, { foreignKey: 'question_id' });

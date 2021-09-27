@@ -1,4 +1,4 @@
-const Answer = require('../../models/answers');
+const Answer = require('../../src/models/answers');
 
 let count = 1;
 
