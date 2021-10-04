@@ -47,6 +47,29 @@ const getQuestions = async (req, res) => {
   }
 };
 
+const getQuestionsNoCache = async (req, res) => {
+  try {
+    const productId = req.query.product_id;
+    const limit = req.query.count ? Number(req.query.count) : 5;
+    const offset = req.query.page ? (req.query.page - 1) * limit : 0;
+
+    const questions = await Question.findAll({
+      where: {
+        product_id: productId,
+      },
+      limit,
+      offset,
+      include: { all: true, nested: true },
+      logging: false,
+    });
+
+    const response = formatQuestions(questions, productId);
+    res.send(response);
+  } catch (err) {
+    res.send(err.message);
+  }
+};
+
 const getAnswers = async (req, res) => {
   try {
     const questionId = req.params.question_id;
@@ -187,4 +210,5 @@ module.exports = {
   markQuestionAsReported,
   markAnswerAsHelpul,
   markAnswerAsReported,
+  getQuestionsNoCache,
 };
