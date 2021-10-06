@@ -1,10 +1,53 @@
+const Redis = require('redis');
 const Question = require('../models/questions');
 const Answer = require('../models/answers');
 const AnswerPhoto = require('../models/answerPhotos');
 const formatQuestions = require('../../utils/formatQuestionResponse');
 const formatAnswers = require('../../utils/formatAnswerResponse');
 
+const redisClient = Redis.createClient(process.env.REDIS_PORT, process.env.REDIS_URL);
+
+redisClient.on('error', (error) => {
+  console.log(error);
+});
+redisClient.on('connect', () => {
+  console.log('connected to redis');
+});
+
 const getQuestions = async (req, res) => {
+  try {
+    const productId = req.query.product_id;
+    const limit = req.query.count ? Number(req.query.count) : 5;
+    const offset = req.query.page ? (req.query.page - 1) * limit : 0;
+
+    redisClient.get(`productid:${productId}`, async (error, cacheResponse) => {
+      if (error) {
+        console.log(error);
+      }
+      if (cacheResponse !== null) {
+        res.send(JSON.parse(cacheResponse));
+      } else {
+        const questions = await Question.findAll({
+          where: {
+            product_id: productId,
+          },
+          limit,
+          offset,
+          include: { all: true, nested: true },
+          logging: false,
+        });
+
+        const response = formatQuestions(questions, productId);
+        redisClient.set(`productid:${productId}`, JSON.stringify(response));
+        res.send(response);
+      }
+    });
+  } catch (err) {
+    res.send(err.message);
+  }
+};
+
+const getQuestionsNoCache = async (req, res) => {
   try {
     const productId = req.query.product_id;
     const limit = req.query.count ? Number(req.query.count) : 5;
@@ -167,4 +210,5 @@ module.exports = {
   markQuestionAsReported,
   markAnswerAsHelpul,
   markAnswerAsReported,
+  getQuestionsNoCache,
 };

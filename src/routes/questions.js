@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/questions');
 
+router.get('/questions/nocache', controller.getQuestionsNoCache);
 router.get('/questions/', controller.getQuestions);
 router.get('/questions/:question_id/answers', controller.getAnswers);
 router.post('/questions/', controller.createQuestion);
