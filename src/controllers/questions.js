@@ -5,20 +5,12 @@ const AnswerPhoto = require('../models/answerPhotos');
 const formatQuestions = require('../../utils/formatQuestionResponse');
 const formatAnswers = require('../../utils/formatAnswerResponse');
 
-const redisMaster = Redis.createClient(process.env.REDIS_PORT, process.env.REDIS_URL);
-const redisLocal = Redis.createClient();
+const redis = Redis.createClient(process.env.REDIS_PORT, process.env.REDIS_URL);
 
-redisMaster.on('error', (error) => {
+redis.on('error', (error) => {
   console.log(error);
 });
-redisMaster.on('connect', () => {
-  console.log('connected to redis');
-});
-
-redisLocal.on('error', (error) => {
-  console.log(error);
-});
-redisLocal.on('connect', () => {
+redis.on('connect', () => {
   console.log('connected to redis');
 });
 
@@ -28,7 +20,7 @@ const getQuestions = async (req, res) => {
     const limit = req.query.count ? Number(req.query.count) : 5;
     const offset = req.query.page ? (req.query.page - 1) * limit : 0;
 
-    redisLocal.get(`productid:${productId}`, async (error, cacheResponse) => {
+    redis.get(`productid:${productId}`, async (error, cacheResponse) => {
       if (error) {
         console.log(error);
       }
@@ -46,7 +38,7 @@ const getQuestions = async (req, res) => {
         });
 
         const response = formatQuestions(questions, productId);
-        redisMaster.set(`productid:${productId}`, JSON.stringify(response));
+        redis.set(`productid:${productId}`, JSON.stringify(response));
         res.send(response);
       }
     });
