@@ -5,7 +5,7 @@ const AnswerPhoto = require('../models/answerPhotos');
 const formatQuestions = require('../../utils/formatQuestionResponse');
 const formatAnswers = require('../../utils/formatAnswerResponse');
 
-const redis = Redis.createClient(process.env.REDIS_PORT, process.env.REDIS_URL);
+const redis = Redis.createClient();
 
 redis.on('error', (error) => {
   console.log(error);
