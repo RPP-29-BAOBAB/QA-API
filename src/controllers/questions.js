@@ -38,11 +38,13 @@ const cluster = new Redis.Cluster([
 
 const getQuestions = async (req, res) => {
   try {
+    console.log('1st step');
     const productId = req.query.product_id;
     const limit = req.query.count ? Number(req.query.count) : 5;
     const offset = req.query.page ? (req.query.page - 1) * limit : 0;
 
     cluster.get(`productid:${productId}`, async (error, cacheResponse) => {
+      console.log('cacheResponse:', cacheResponse);
       if (error) {
         console.log(error);
       }
