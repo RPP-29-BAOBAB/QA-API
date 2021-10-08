@@ -1,18 +1,40 @@
-const Redis = require('redis');
+const Redis = require('ioredis');
 const Question = require('../models/questions');
 const Answer = require('../models/answers');
 const AnswerPhoto = require('../models/answerPhotos');
 const formatQuestions = require('../../utils/formatQuestionResponse');
 const formatAnswers = require('../../utils/formatAnswerResponse');
 
-const redis = Redis.createClient();
-
-redis.on('error', (error) => {
-  console.log(error);
-});
-redis.on('connect', () => {
-  console.log('connected to redis');
-});
+const cluster = new Redis.Cluster([
+  {
+    port: 6379,
+    host: '172.31.1.37',
+  },
+  {
+    port: 6379,
+    host: '172.31.5.209',
+  },
+  {
+    port: 6379,
+    host: '172.31.36.168',
+  },
+  {
+    port: 6379,
+    host: '172.31.23.9',
+  },
+  {
+    port: 6379,
+    host: '172.31.34.84',
+  },
+  {
+    port: 6379,
+    host: '172.31.9.23',
+  },
+  {
+    port: 6379,
+    host: '172.31.34.84',
+  },
+]);
 
 const getQuestions = async (req, res) => {
   try {
@@ -20,7 +42,7 @@ const getQuestions = async (req, res) => {
     const limit = req.query.count ? Number(req.query.count) : 5;
     const offset = req.query.page ? (req.query.page - 1) * limit : 0;
 
-    redis.get(`productid:${productId}`, async (error, cacheResponse) => {
+    cluster.get(`productid:${productId}`, async (error, cacheResponse) => {
       if (error) {
         console.log(error);
       }
@@ -38,7 +60,7 @@ const getQuestions = async (req, res) => {
         });
 
         const response = formatQuestions(questions, productId);
-        redis.set(`productid:${productId}`, JSON.stringify(response));
+        cluster.set(`productid:${productId}`, JSON.stringify(response));
         res.send(response);
       }
     });
