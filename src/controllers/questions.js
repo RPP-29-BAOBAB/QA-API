@@ -8,31 +8,11 @@ const formatAnswers = require('../../utils/formatAnswerResponse');
 const cluster = new Redis.Cluster([
   {
     port: 6379,
-    host: '172.31.1.37',
-  },
-  {
-    port: 6379,
-    host: '172.31.5.209',
-  },
-  {
-    port: 6379,
     host: '172.31.36.168',
   },
   {
     port: 6379,
     host: '172.31.23.9',
-  },
-  {
-    port: 6379,
-    host: '172.31.34.84',
-  },
-  {
-    port: 6379,
-    host: '172.31.9.23',
-  },
-  {
-    port: 6379,
-    host: '172.31.34.84',
   },
 ]);
 
